@@ -1,0 +1,10 @@
+{
+    "name": "NutcrackerOnly",
+    "version_number": "1.0.0",
+    "website_url": "https://github.com/nicofloflo/NutcrackerOnly",
+    "description": "A nutcracker only mod that I made for the 10 Quota League",
+    "dependencies": [
+        "BepInEx-BepInExPack-5.4.2100",
+        "BMX-LobbyCompatibility-1.4.0"
+    ]
+}
