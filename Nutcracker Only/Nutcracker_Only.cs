@@ -33,7 +33,9 @@ public class NutcrackerOnly : BaseUnityPlugin
 
         Logger.LogDebug("Patching...");
 
-        Harmony.PatchAll(typeof(Nut));
+        Harmony.PatchAll(typeof(LevelGen));
+        Harmony.PatchAll(typeof(NutChanges));
+        Harmony.PatchAll(typeof(EggSpawns));
 
         Logger.LogDebug("Finished patching!");
     }
