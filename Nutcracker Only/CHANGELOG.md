@@ -4,3 +4,9 @@ V1.0.0
 - change price of shotgun to be increased to 120 ✅
 - when eclipsed make it so that nutcrackers are added to the probabilities for outside enemy spawn chances ✅
 - change weight of shotgun shells ✅
+v1.0.3
+- Change shotgun shells to 2 Easter eggs ✅
+- Change scrap spawns to all Easter eggs with 0 value ✅
+- changed price of shotgun to 214 for hahas ✅
+v1.0.4 
+- Fixed code for when eclipsed outsides were happening and nutcrackers were still considered inside enemies and going to specific nodes ✅

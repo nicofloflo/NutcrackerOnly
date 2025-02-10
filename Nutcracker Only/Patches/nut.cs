@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using HarmonyLib;
 using Unity.Netcode;
 using UnityEngine;
@@ -17,54 +18,74 @@ public class LevelGen
     private static SpawnableEnemyWithRarity Coil = StartOfRound.Instance.levels[5].Enemies[6];
     
     private static SpawnableEnemyWithRarity GhostGirl = StartOfRound.Instance.levels[5].Enemies[0];
-    
-    private static EnemyType ButtCrack = new EnemyType();
-    
 
+    private static SpawnableEnemyWithRarity OutsideNut = new SpawnableEnemyWithRarity();
+    
     private static SelectableLevel NutLevel = new SelectableLevel();
     
     private static SelectableLevel previousLevel = new SelectableLevel();
-    
-    private static EnemyType CloneEnemyType(EnemyType original)
+
+    private static EnemyType outCracker = new EnemyType();
+
+    [HarmonyPatch(typeof(StartOfRound), "StartGame")]
+    [HarmonyPostfix]
+
+    public static void MakeOutcracker(StartOfRound __instance)
     {
-        EnemyType copy = new EnemyType();
-    
-        foreach (var field in typeof(EnemyType).GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance))
+        outCracker = ScriptableObject.CreateInstance<EnemyType>();
+        outCracker.enemyName = "Outcracker";
+        outCracker.probabilityCurve = Crack.enemyType.probabilityCurve;
+        outCracker.spawningDisabled = Crack.enemyType.spawningDisabled;
+        outCracker.spawnFromWeeds = Crack.enemyType.spawnFromWeeds;
+        outCracker.numberSpawnedFalloff = Crack.enemyType.numberSpawnedFalloff;
+        outCracker.useNumberSpawnedFalloff = Crack.enemyType.useNumberSpawnedFalloff;
+        outCracker.enemyPrefab = Crack.enemyType.enemyPrefab;
+        outCracker.PowerLevel = Crack.enemyType.PowerLevel;
+        outCracker.MaxCount = 70;
+        outCracker.numberSpawned = Crack.enemyType.numberSpawned;
+        outCracker.isOutsideEnemy = true;
+        outCracker.isDaytimeEnemy = Crack.enemyType.isDaytimeEnemy;
+        outCracker.increasedChanceInterior = Crack.enemyType.increasedChanceInterior;
+        outCracker.normalizedTimeInDayToLeave = Crack.enemyType.normalizedTimeInDayToLeave;
+        outCracker.stunTimeMultiplier = Crack.enemyType.stunTimeMultiplier;
+        outCracker.doorSpeedMultiplier = Crack.enemyType.doorSpeedMultiplier;
+        outCracker.stunGameDifficultyMultiplier = Crack.enemyType.stunGameDifficultyMultiplier;
+        outCracker.canBeStunned = Crack.enemyType.canBeStunned;
+        outCracker.canDie = Crack.enemyType.canDie;
+        outCracker.canBeDestroyed = Crack.enemyType.canBeDestroyed;
+        outCracker.destroyOnDeath = Crack.enemyType.destroyOnDeath;
+        outCracker.canSeeThroughFog = Crack.enemyType.canSeeThroughFog;
+        outCracker.pushPlayerForce = Crack.enemyType.pushPlayerForce;
+        outCracker.pushPlayerDistance = Crack.enemyType.pushPlayerDistance;
+        outCracker.SizeLimit = Crack.enemyType.SizeLimit;
+        outCracker.timeToPlayAudio = Crack.enemyType.timeToPlayAudio;
+        outCracker.loudnessMultiplier = Crack.enemyType.loudnessMultiplier;
+        outCracker.overrideVentSFX = Crack.enemyType.overrideVentSFX;
+        outCracker.nestSpawnPrefab = Crack.enemyType.nestSpawnPrefab;
+        outCracker.nestSpawnPrefabWidth = Crack.enemyType.nestSpawnPrefabWidth;
+        outCracker.useMinEnemyThresholdForNest = Crack.enemyType.useMinEnemyThresholdForNest;
+        outCracker.hitBodySFX = Crack.enemyType.hitBodySFX;
+        outCracker.hitEnemyVoiceSFX = Crack.enemyType.hitEnemyVoiceSFX;
+        outCracker.deathSFX = Crack.enemyType.deathSFX;
+        outCracker.stunSFX = Crack.enemyType.stunSFX;
+        outCracker.miscAnimations = Crack.enemyType.miscAnimations;
+        outCracker.audioClips = Crack.enemyType.audioClips;
+        
+        OutsideNut = new SpawnableEnemyWithRarity
         {
-            field.SetValue(copy, field.GetValue(original));
-        }
+            enemyType = outCracker,
+            rarity = Crack.rarity
+        };
 
-        return copy;
+
     }
-
-    private static SpawnableEnemyWithRarity CloneSpawnableEnemy(SpawnableEnemyWithRarity original)
-    {
-        SpawnableEnemyWithRarity copy = new SpawnableEnemyWithRarity();
     
-        foreach (var field in typeof(SpawnableEnemyWithRarity).GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance))
-        {
-            field.SetValue(copy, field.GetValue(original));
-        }
-
-        // Clone enemyType separately
-        ButtCrack = CloneEnemyType(Crack.enemyType); 
-
-        return copy;
-    }
-
-// Usage:
-    private static SpawnableEnemyWithRarity OutsideNut = CloneSpawnableEnemy(Crack);
-   
     
     [HarmonyPatch(typeof(RoundManager), "FinishGeneratingLevel")]
     [HarmonyPostfix]
 
     public static void SetNutcrackersOnly(RoundManager __instance)
     {
-        OutsideNut.enemyType = ButtCrack;
-        ButtCrack.isOutsideEnemy = true;
-        ButtCrack.MaxCount = 70;
-        ButtCrack.enemyName = "Buttcracker";
         Crack.rarity = 90;
         Bracken.rarity = 7;
         Coil.rarity = 2;
@@ -79,8 +100,6 @@ public class LevelGen
         NutLevel.Enemies.Add(GhostGirl);
         NutLevel.OutsideEnemies = new List<SpawnableEnemyWithRarity>();
         NutLevel.OutsideEnemies.Add(OutsideNut);
-        
-        
 
         __instance.scrapValueMultiplier = 0;
        
@@ -99,7 +118,7 @@ public class LevelGen
 
             __instance.currentLevel.OutsideEnemies.Clear();
             __instance.currentLevel.OutsideEnemies.Add(NutLevel.OutsideEnemies[0]);
-            Debug.Log(NutLevel.OutsideEnemies[0].enemyType.isOutsideEnemy);
+            Debug.Log("IS THIS TRUE OR FALSE " + NutLevel.OutsideEnemies[0].enemyType.isOutsideEnemy);
         }
         
 
@@ -193,6 +212,21 @@ public class NutChanges
             gameObject.GetComponent<GrabbableObject>().fallTime = 0.0f;
             gameObject.GetComponent<NetworkObject>().Spawn();
         }
+    }
+
+    [HarmonyPatch(typeof(NutcrackerEnemyAI), "Update")]
+    [HarmonyPostfix]
+
+    public static void CheckIfOutside(NutcrackerEnemyAI __instance)
+    {
+
+        if ((double)__instance.transform.position.y > -80.0)
+        {
+            __instance.SetEnemyOutside(true);
+        }
+        
+        
+        
     }
 }
 

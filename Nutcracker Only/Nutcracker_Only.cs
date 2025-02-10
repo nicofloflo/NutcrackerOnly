@@ -1,9 +1,14 @@
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using BepInEx;
 using BepInEx.Logging;
+using Dissonance;
 using HarmonyLib;
 using LobbyCompatibility.Attributes;
 using LobbyCompatibility.Enums;
 using Nutcracker_Only.Patches;
+using UnityEngine;
 
 namespace Nutcracker_Only;
 
@@ -13,6 +18,8 @@ namespace Nutcracker_Only;
 public class NutcrackerOnly : BaseUnityPlugin
 {
     public static NutcrackerOnly Instance { get; private set; } = null!;
+
+    public static AssetBundle SecondNutAsset;
     internal new static ManualLogSource Logger { get; private set; } = null!;
     internal static Harmony? Harmony { get; set; }
 
@@ -22,9 +29,11 @@ public class NutcrackerOnly : BaseUnityPlugin
         Instance = this;
 
         Patch();
-
+        
         Logger.LogInfo($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
         Logger.LogInfo("I am NutCowBoy!");
+        
+        
     }
 
     internal static void Patch()
