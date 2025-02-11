@@ -10,3 +10,6 @@ v1.0.3
 - changed price of shotgun to 214 for hahas ✅
 v1.0.4 
 - Fixed code for when eclipsed outsides were happening and nutcrackers were still considered inside enemies and going to specific nodes ✅
+v1.0.5
+- Added Balataro Easter Egg (quite literally)
+- Fixed bug where you could lose all of your experience

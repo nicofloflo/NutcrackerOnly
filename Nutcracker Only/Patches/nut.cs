@@ -262,3 +262,47 @@ public class EggSpawns
     
     
 }
+
+public class ExpFix
+{
+    [HarmonyPatch(typeof(HUDManager), "SetPlayerLevel")]
+    [HarmonyPrefix]
+    
+    public static void SetPlayerLevel(HUDManager __instance)
+    {
+        RoundManager.Instance.totalScrapValueInLevel += 3;
+    }
+}
+
+public class InterestEggs
+{
+    [HarmonyPatch(typeof(StartOfRound), "GetValueOfAllScrap")]
+    [HarmonyPrefix]
+    public static bool EggInterest(ref int __result, StartOfRound __instance, bool onlyScrapCollected = true, bool onlyNewScrap = false)
+    {
+        GrabbableObject[] objectsOfType = UnityEngine.Object.FindObjectsOfType<GrabbableObject>();
+        int valueOfAllScrap = 0;
+        for (int index = 0; index < objectsOfType.Length; ++index)
+        {
+            if (objectsOfType[index].itemProperties.itemName == "Easter egg")
+            {
+                objectsOfType[index].SetScrapValue(objectsOfType[index].scrapValue + 3);
+            }
+
+            if (__instance.shipInnerRoomBounds.bounds.Contains(objectsOfType[index].transform.position))
+                objectsOfType[index].isInShipRoom = true;
+        }
+
+        for (int index = 0; index < objectsOfType.Length; ++index)
+        {
+            if ((!onlyNewScrap || !objectsOfType[index].scrapPersistedThroughRounds) &&
+                objectsOfType[index].itemProperties.isScrap && !objectsOfType[index].deactivated &&
+                !objectsOfType[index].itemUsedUp && (objectsOfType[index].isInShipRoom || !onlyScrapCollected))
+                valueOfAllScrap += objectsOfType[index].scrapValue;
+        }
+
+        __result = valueOfAllScrap;
+        
+        return false;
+    }
+}

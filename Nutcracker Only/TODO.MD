@@ -7,11 +7,11 @@
 - Change shotgun shells to 2 Easter eggs ✅
 - Change scrap spawns to all Easter eggs with 0 value ✅
 - Change min spawn at start to 1 nutcracker
-- Balataro egg reference if you leave egg in ship it increases value by a certain amount
+- Balataro egg reference if you leave egg in ship it increases value by a certain amount✅
 
 ### BUGS
 
 - after eclipsed day, day after works fine however day after that no outside enemies ✅
 - Ammo if reloaded both shells gives you 1000 pounds ✅ (changes to easter eggs)
 - Accidentally put Assurance instead of Experimentation for only Nut spawns (found that out the hard way) ✅
-- Outdoor Nutcrackers are considered to by inside enemies which makes them go to a specific node want to separate entites from outside to inside ✅
+- Outdoor Nutcrackers are considered to by inside enemies which makes them go to a specific node want to separate entities from outside to inside ✅
