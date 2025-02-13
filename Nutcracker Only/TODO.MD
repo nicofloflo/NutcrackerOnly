@@ -8,6 +8,8 @@
 - Change scrap spawns to all Easter eggs with 0 value ✅
 - Change min spawn at start to 1 nutcracker
 - Balataro egg reference if you leave egg in ship it increases value by a certain amount✅
+- Lower the price back to base level 60 ✅
+- Lower Adamance second point and Offense third point spawns; ✅
 
 ### BUGS
 

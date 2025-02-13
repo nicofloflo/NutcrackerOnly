@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 using HarmonyLib;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.InputSystem.Utilities;
+using UnityEngine.ProBuilder;
 
 
 namespace Nutcracker_Only.Patches;
@@ -70,20 +72,77 @@ public class LevelGen
         outCracker.stunSFX = Crack.enemyType.stunSFX;
         outCracker.miscAnimations = Crack.enemyType.miscAnimations;
         outCracker.audioClips = Crack.enemyType.audioClips;
-        
+
         OutsideNut = new SpawnableEnemyWithRarity
         {
             enemyType = outCracker,
             rarity = Crack.rarity
         };
 
+    }
+        
+    // 0 - 41 Experimentation 0.112, 4.73351, 0.448, 4.73351
+    // 1 - 220 Assurance 0.392, 6.038967
+    // 2 - 56 Vow 0, 1.240476, .504, 6.507092
+    // 3 - 71 Gordion
+    // 4 - 61 March 0.224, 4.410501
+    // 5 - 20 Adamance 0f, -3f, 0.1625553f,0.006106406f, 0.4610122f, 5f, 0.7631003, 11.27556 
+    // 6 - 85 Rend .056, 2.817775
+    // 7 - 7 Dine 0, 2.817775, 0.336, 6.660501
+    // 8 - 21 Offense 0, -3f, 0.2077699,1.22323, .504f ,7.363626f
+    // 9 - 8 Titan 0,5f, 0.504, 11.27556f
+    // 10 - 68 Artifice
+    // 11 - 44 Liquidation
+    // 12 - 5 Embrion 0f,1.516304f, .448,7.363626
+    //
+    // 0 = 6 AM
+    // 0.056 = 7 AM
+    // 0.112 = 8 AM
+    // 0.168 = 9 AM
+    // 0.224 = 10 AM
+    // 0.28 = 11 AM
+    // 0.336 = 12 AM
+    // 0.392 = 1 PM
+    // 0.448 = 2 PM
+    // 0.504 = 3 PM
+    // 0.56 = 4 PM
+    // 0.616 = 5 PM
+    // 0.672 = 6 PM
+    // 0.728 = 7 PM
+    // 0.784 = 8 PM
+    // 0.84 = 9 PM
+    // 0.896 = 10 PM
+    // 0.952 = 11 PM
+    // 1 = 12 AM
+
+    [HarmonyPatch(typeof(StartOfRound), "StartGame")]
+    [HarmonyPostfix]
+    public static void CreateUpdatedAnimationCurve(StartOfRound __instance)
+    {
+        foreach (var level in __instance.levels)
+        {
+            Debug.Log(level.PlanetName);
+        }
+        
+        __instance.levels[0].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f, -3f), new Keyframe(0.195999f, 4.73351f), new Keyframe(0.7593884f,4.973001f), new Keyframe(1f,15f));
+        __instance.levels[1].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f, -3f), new Keyframe(0.4999272f, 6.038967f), new Keyframe(1f, 15f));
+        __instance.levels[2].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f , 1.240476f), new Keyframe(.504f, 6.507092f), new Keyframe(1f, 15f));
+        __instance.levels[4].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f, -3f), new Keyframe(0.224f,4.410501f), new Keyframe(1f, 15f));
+        __instance.levels[4].outsideEnemySpawnChanceThroughDay = new AnimationCurve(new Keyframe(0f,1f), new Keyframe(0.28f,2f), new Keyframe(0.8769338f, 3.964059f), new Keyframe(1f, 5.359401f));
+        __instance.levels[5].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f,-3f), new Keyframe(0.1625553f,0.006106406f), new Keyframe(0.504f, 5f), new Keyframe(0.7631003f, 11.27556f), new Keyframe(1f, 15f));
+        __instance.levels[6].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0, -3f), new Keyframe(.056f, 2.817775f), new Keyframe(1f, 15f));
+        __instance.levels[7].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f, 2.817775f), new Keyframe(0.336f, 6.660501f), new Keyframe(1f, 15f));
+        __instance.levels[8].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0, -3f), new Keyframe(0.2077699f,1.22323f), new Keyframe(.504f ,7.363626f),new Keyframe(1f, 15f));
+        __instance.levels[9].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f,5f), new Keyframe(0.504f, 11.27556f), new Keyframe(1f, 15f));
+        __instance.levels[10].dungeonFlowTypes = __instance.levels[7].dungeonFlowTypes;
+        __instance.levels[10].maxEnemyPowerCount = 24;
+        __instance.levels[10].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f, 7f), new Keyframe(0.448f,12f), new Keyframe(1f, 15f));
+        __instance.levels[12].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f,1.516304f), new Keyframe(.448f,7.363626f),new Keyframe(1f, 15f));
 
     }
     
-    
     [HarmonyPatch(typeof(RoundManager), "FinishGeneratingLevel")]
     [HarmonyPostfix]
-
     public static void SetNutcrackersOnly(RoundManager __instance)
     {
         Crack.rarity = 90;
@@ -91,7 +150,6 @@ public class LevelGen
         Coil.rarity = 2;
         GhostGirl.rarity = 1;
         Crack.enemyType.MaxCount = 30;
-        
         NutLevel = ScriptableObject.CreateInstance<SelectableLevel>();
         NutLevel.Enemies = new List<SpawnableEnemyWithRarity>();
         NutLevel.Enemies.Add(Crack);
@@ -100,6 +158,7 @@ public class LevelGen
         NutLevel.Enemies.Add(GhostGirl);
         NutLevel.OutsideEnemies = new List<SpawnableEnemyWithRarity>();
         NutLevel.OutsideEnemies.Add(OutsideNut);
+       
 
         __instance.scrapValueMultiplier = 0;
        
@@ -118,7 +177,7 @@ public class LevelGen
 
             __instance.currentLevel.OutsideEnemies.Clear();
             __instance.currentLevel.OutsideEnemies.Add(NutLevel.OutsideEnemies[0]);
-            Debug.Log("IS THIS TRUE OR FALSE " + NutLevel.OutsideEnemies[0].enemyType.isOutsideEnemy);
+            
         }
         
 
@@ -129,6 +188,12 @@ public class LevelGen
             __instance.minEnemiesToSpawn = 1;
             return;
             
+        }
+
+        if (__instance.currentLevel.levelID == 4)
+        {
+            __instance.currentLevel.OutsideEnemies.Clear();
+            __instance.currentLevel.OutsideEnemies.Add(NutLevel.OutsideEnemies[0]);
         }
         __instance.currentLevel.Enemies.Clear();
         __instance.currentLevel.Enemies.Add(NutLevel.Enemies[0]);
@@ -179,7 +244,7 @@ public class NutChanges
         else
         {
             Debug.Log((object) "Setting gun scrap value");
-            __instance.gun.SetScrapValue(214);
+            __instance.gun.SetScrapValue(60);
             RoundManager.Instance.totalScrapValueInLevel += (float) __instance.gun.scrapValue;
             __instance.gun.parentObject = __instance.gunPoint;
             __instance.gun.isHeldByEnemy = true;
@@ -232,8 +297,8 @@ public class NutChanges
 
 public class EggSpawns
 {
-    public static SpawnableItemWithRarity Egg = StartOfRound.Instance.levels[0].spawnableScrap[22];
-    public static SelectableLevel EggLevel = new SelectableLevel();
+    private static SpawnableItemWithRarity Egg = StartOfRound.Instance.levels[0].spawnableScrap[22];
+    private static SelectableLevel EggLevel = new SelectableLevel();
     [HarmonyPatch(typeof(RoundManager), "FinishGeneratingLevel")]
     [HarmonyPostfix]
     

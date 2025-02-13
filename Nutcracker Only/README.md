@@ -7,6 +7,18 @@ This mod is one of the most fun mods I have made in a second, I was asked by the
 In this mod though it says nutcracker only, only having nutcrackers is inherently boring so there is a chance of having different enemies.
 The spawn chances are spoiled below.
 >! 90%  Nutcracker, 8% Bracken, 2% CoilHead, 1% Ghost Girl.
+>
+
+- Experimentation/Assurance/Vow push spawn curve four hours into the future with the idea of these are the moons to get an early shotgun
+- Offense/Adamance due to the increased power levels of these moons I have only moved one point of the curve closer meaning that if you stay long on these moons you will gain more value from them
+- March has the same principle as the moons above HOWEVER on this moon outside nutcrackers spawn throughout the day making the march forests into a WW1 battleground
+- Rend now has an immediate spawning nutcrackers that make it fierce it could be a play as the first mansion map
+- Dine now has immediate spawning nutcrackers but with the spawn rate even higher that Rend the mineshaft tunnels of Dine could actually be a savior if you are out a few bucks
+- TITAN - Titan is a moon that could possibly take on Artifice with this pack when it comes to speed and dropping it is the second-fastest moon when it comes to spawning.
+- Artifice - Artifice has been made into the most insane moon due to the fact it's supposed to be the maximum amount of scrap you can get
+    - Artifice's first change is a now max power level of 24 meaning a lot of nuts considering how nuts the next change is.
+    - Artifice now has the highest spawning level compared to how quiet it usually is.
+    - Artifice's dungeon layouts are now = to Rends dungeon layouts
 
 ## Scrap Spawns
 
