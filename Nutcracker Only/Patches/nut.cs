@@ -136,7 +136,7 @@ public class LevelGen
         __instance.levels[9].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f,5f), new Keyframe(0.504f, 11.27556f), new Keyframe(1f, 15f));
         // __instance.levels[10].dungeonFlowTypes = __instance.levels[7].dungeonFlowTypes;
         __instance.levels[10].maxEnemyPowerCount = 24;
-        __instance.levels[10].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f, 8f), new Keyframe(0.448f,12f), new Keyframe(1f, 15f));
+        __instance.levels[10].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f, 7f), new Keyframe(0.448f,12f), new Keyframe(1f, 15f));
         __instance.levels[12].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f,1.516304f), new Keyframe(.448f,7.363626f),new Keyframe(1f, 15f));
 
     }
