@@ -36,3 +36,9 @@
     - Artifice now has the highest spawning level compared to how quiet it usually is.
     - Artifice's dungeon layouts are now = to Rends dungeon layouts
 - Due to all these insane changes, the price of shotguns had to be dropped to its base level of 60 requiring 6.23 shotguns on average a day to complete all ten quotas.
+
+###### 1.0.7
+- Added hotfix to Artifice due to interiors being de-synced from host to client
+###### 1.0.8
+- Buffed Titan to have a 45 max inside cracker max spawn
+- Buffed Artifice to have a 70 max inside cracker max spawn and slightly touched the curve up to ensure it is better than titan

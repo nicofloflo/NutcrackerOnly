@@ -134,9 +134,9 @@ public class LevelGen
         __instance.levels[7].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f, 2.817775f), new Keyframe(0.336f, 6.660501f), new Keyframe(1f, 15f));
         __instance.levels[8].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0, -3f), new Keyframe(0.2077699f,1.22323f), new Keyframe(.504f ,7.363626f),new Keyframe(1f, 15f));
         __instance.levels[9].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f,5f), new Keyframe(0.504f, 11.27556f), new Keyframe(1f, 15f));
-        __instance.levels[10].dungeonFlowTypes = __instance.levels[7].dungeonFlowTypes;
+        // __instance.levels[10].dungeonFlowTypes = __instance.levels[7].dungeonFlowTypes;
         __instance.levels[10].maxEnemyPowerCount = 24;
-        __instance.levels[10].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f, 7f), new Keyframe(0.448f,12f), new Keyframe(1f, 15f));
+        __instance.levels[10].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f, 8f), new Keyframe(0.448f,12f), new Keyframe(1f, 15f));
         __instance.levels[12].enemySpawnChanceThroughoutDay = new AnimationCurve(new Keyframe(0f,1.516304f), new Keyframe(.448f,7.363626f),new Keyframe(1f, 15f));
 
     }
@@ -195,6 +195,17 @@ public class LevelGen
             __instance.currentLevel.OutsideEnemies.Clear();
             __instance.currentLevel.OutsideEnemies.Add(NutLevel.OutsideEnemies[0]);
         }
+
+        if (__instance.currentLevel.levelID == 9)
+        {
+            Crack.enemyType.MaxCount = 45;
+        }
+
+        if (__instance.currentLevel.levelID == 10)
+        {
+            Crack.enemyType.MaxCount = 70;
+        }
+        
         __instance.currentLevel.Enemies.Clear();
         __instance.currentLevel.Enemies.Add(NutLevel.Enemies[0]);
         __instance.currentLevel.Enemies.Add(NutLevel.Enemies[2]);
