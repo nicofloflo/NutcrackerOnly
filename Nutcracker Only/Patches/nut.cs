@@ -362,7 +362,8 @@ public class InterestEggs
         {
             if (objectsOfType[index].itemProperties.itemName == "Easter egg")
             {
-                objectsOfType[index].SetScrapValue(objectsOfType[index].scrapValue + 3);
+                if (__instance.currentLevel.levelID != StartOfRound.Instance.levels[3].levelID)
+                    objectsOfType[index].SetScrapValue(objectsOfType[index].scrapValue + 3);
             }
 
             if (__instance.shipInnerRoomBounds.bounds.Contains(objectsOfType[index].transform.position))
